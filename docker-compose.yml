@@ -1,9 +1,9 @@
 version: "3.8"
 services:
-  mysqldb_notes:
+  mysqldb-notes:
     restart: always
     image: mysql:8.0
-    container_name: mysqldb_notes
+    container_name: mysqldb-notes
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: notesdb

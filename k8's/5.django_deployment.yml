@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-deployment
+  namespace: project-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notes-app
+  template:
+    metadata:
+      labels:
+        app: notes-app
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox
+          command: ['sh', '-c', 'until nc -z mysqldb-notes 3306; do echo waiting for db; sleep 2; done;']
+        - name: migrate-database
+          image: nithingowda46/notes-app:latest
+          command: ['sh', '-c', 'python manage.py migrate']
+          env:
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_DATABASE
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_USER
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secret
+                key: MYSQL_PASSWORD 
+          - name: MYSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_HOST
+          - name: MYSQL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_PORT
+      containers:
+        - name: django-container
+          image: nithingowda46/notes-app:latest
+          ports:
+            - containerPort: 8000
+          env:
+          - name: MYSQL_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_DATABASE
+          - name: MYSQL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_USER
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secret
+                key: MYSQL_PASSWORD 
+          - name: MYSQL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_HOST
+          - name: MYSQL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: config
+                key: MYSQL_PORT 
