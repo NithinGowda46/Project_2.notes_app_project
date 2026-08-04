@@ -58,6 +58,7 @@ spec:
             name: project-2-mysql-pvc
             namespace: project-2
           spec:
+            storageClassName: retain-storage
             accessModes: ["ReadWriteOnce"]
             resources:
               requests:
