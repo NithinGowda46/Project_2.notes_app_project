@@ -1,0 +1,83 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+
+metadata:
+  name: project-2
+  namespace: argocd
+
+spec:
+  description: Production project for Notes Application
+
+  # Allowed Git repositories
+  sourceRepos:
+    - https://github.com/NithinGowda46/Docker_2.notes_app_project.git
+
+  # Allowed deployment destinations
+  destinations:
+    - namespace: project-2
+      server: https://kubernetes.default.svc
+
+  # Cluster-scoped resources allowed
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+
+    - group: ""
+      kind: PersistentVolume
+
+    - group: ""
+      kind: PersistentVolumeClaim
+
+    - group: storage.k8s.io
+      kind: StorageClass
+
+  # Namespace-scoped resources allowed
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: ConfigMap
+
+    - group: ""
+      kind: Secret
+
+    - group: ""
+      kind: Service
+
+    - group: ""
+      kind: ServiceAccount
+
+    - group: ""
+      kind: PersistentVolumeClaim
+
+    - group: apps
+      kind: Deployment
+
+    - group: apps
+      kind: StatefulSet
+
+    - group: apps
+      kind: ReplicaSet
+
+    - group: apps
+      kind: DaemonSet
+
+    - group: apps
+      kind: Deployment
+
+    - group: networking.k8s.io
+      kind: Ingress
+
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+
+    - group: policy
+      kind: PodDisruptionBudget
+
+    - group: batch
+      kind: Job
+
+    - group: batch
+      kind: CronJob
+
+  # Warn about orphaned resources
+  orphanedResources:
+    warn: true
