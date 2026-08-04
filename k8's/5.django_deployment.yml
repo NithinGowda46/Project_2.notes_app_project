@@ -4,7 +4,7 @@ metadata:
   name: django-deployment
   namespace: project-2
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: notes-app
