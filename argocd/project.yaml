@@ -10,7 +10,7 @@ spec:
 
   # Allowed Git repositories
   sourceRepos:
-    - https://github.com/NithinGowda46/Docker_2.notes_app_project.git
+    - https://github.com/NithinGowda46/Project_2.notes_app_project.git 
 
   # Allowed deployment destinations
   destinations:
