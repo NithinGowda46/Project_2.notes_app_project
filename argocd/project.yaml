@@ -31,6 +31,9 @@ spec:
     - group: storage.k8s.io
       kind: StorageClass
 
+    - group: "*".      #for allowing all cluster-scoped resources, you can use the wildcard group and kind
+      kind: "*"
+
   # Namespace-scoped resources allowed
   namespaceResourceWhitelist:
     - group: ""
@@ -69,6 +72,9 @@ spec:
     - group: autoscaling
       kind: HorizontalPodAutoscaler
 
+    - group: autoscaling
+      kind: VerticalPodAutoscaler
+
     - group: policy
       kind: PodDisruptionBudget
 
@@ -77,6 +83,9 @@ spec:
 
     - group: batch
       kind: CronJob
+    
+    - group: "*"      #for allowing all namespace-scoped resources, you can use the wildcard group and kind
+      kind: "*"
 
   # Warn about orphaned resources
   orphanedResources:
